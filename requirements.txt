@@ -13,14 +13,12 @@
     {
       "cell_type": "code",
       "source": [
-        "```text\n",
+        "streamlit\n",
         "google-genai\n",
         "python-dotenv\n",
         "requests\n",
         "beautifulsoup4\n",
-        "APScheduler\n",
-        "streamlit\n",
-        "```\n"
+        "APScheduler\n"
       ],
       "metadata": {
         "id": "58L0E8g328h6"

@@ -1,237 +1,131 @@
-{
-  "nbformat": 4,
-  "nbformat_minor": 0,
-  "metadata": {
-    "colab": {
-      "provenance": [],
-      "authorship_tag": "ABX9TyPAtVjikiR2GnTmAhxKH1zd",
-      "include_colab_link": true
-    },
-    "kernelspec": {
-      "name": "python3",
-      "display_name": "Python 3"
-    },
-    "language_info": {
-      "name": "python"
-    }
-  },
-  "cells": [
-    {
-      "cell_type": "markdown",
-      "metadata": {
-        "id": "view-in-github",
-        "colab_type": "text"
-      },
-      "source": [
-        "<a href=\"https://colab.research.google.com/github/sackm123-cloud/AI-Website-Agent-/blob/main/main.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
-      ]
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "\"\"\"\n",
-        "AI STEM Automation Hub\n",
-        "main.py\n",
-        "\n",
-        "Central controller for:\n",
-        "1. Daily AI/Robotics News\n",
-        "2. STEM Class Updates\n",
-        "3. Daily STEM Tip\n",
-        "4. Project Idea\n",
-        "5. Weekly Progress Report\n",
-        "6. Competition Update\n",
-        "\"\"\"\n",
-        "\n",
-        "import argparse\n",
-        "import logging\n",
-        "from datetime import datetime\n",
-        "\n",
-        "from agents.news_agent import run_news_agent\n",
-        "from agents.class_agent import run_class_agent\n",
-        "from agents.stem_tip_agent import run_stem_tip_agent\n",
-        "from agents.project_agent import run_project_agent\n",
-        "from agents.weekly_report_agent import run_weekly_report_agent\n",
-        "from agents.competition_agent import run_competition_agent\n",
-        "\n",
-        "\n",
-        "# ---------------------------------------------------------\n",
-        "# Logging\n",
-        "# ---------------------------------------------------------\n",
-        "\n",
-        "logging.basicConfig(\n",
-        "    level=logging.INFO,\n",
-        "    format=\"%(asctime)s | %(levelname)s | %(message)s\",\n",
-        ")\n",
-        "\n",
-        "logger = logging.getLogger(\"AI-STEM-Automation\")\n",
-        "\n",
-        "\n",
-        "# ---------------------------------------------------------\n",
-        "# Agent Runner\n",
-        "# ---------------------------------------------------------\n",
-        "\n",
-        "def run_agent(agent_name: str):\n",
-        "    \"\"\"Run a selected automation agent.\"\"\"\n",
-        "\n",
-        "    logger.info(\"Starting agent: %s\", agent_name)\n",
-        "\n",
-        "    try:\n",
-        "        if agent_name == \"news\":\n",
-        "            result = run_news_agent()\n",
-        "\n",
-        "        elif agent_name == \"class\":\n",
-        "            result = run_class_agent()\n",
-        "\n",
-        "        elif agent_name == \"tip\":\n",
-        "            result = run_stem_tip_agent()\n",
-        "\n",
-        "        elif agent_name == \"project\":\n",
-        "            result = run_project_agent()\n",
-        "\n",
-        "        elif agent_name == \"weekly\":\n",
-        "            result = run_weekly_report_agent()\n",
-        "\n",
-        "        elif agent_name == \"competition\":\n",
-        "            result = run_competition_agent()\n",
-        "\n",
-        "        elif agent_name == \"all\":\n",
-        "            result = run_all_agents()\n",
-        "\n",
-        "        else:\n",
-        "            raise ValueError(f\"Unknown agent: {agent_name}\")\n",
-        "\n",
-        "        logger.info(\"Agent completed successfully: %s\", agent_name)\n",
-        "        return result\n",
-        "\n",
-        "    except Exception as exc:\n",
-        "        logger.exception(\n",
-        "            \"Agent failed: %s | Error: %s\",\n",
-        "            agent_name,\n",
-        "            exc,\n",
-        "        )\n",
-        "        return None\n",
-        "\n",
-        "\n",
-        "# ---------------------------------------------------------\n",
-        "# Run All Agents\n",
-        "# ---------------------------------------------------------\n",
-        "\n",
-        "def run_all_agents():\n",
-        "    \"\"\"Run all six AI automation agents.\"\"\"\n",
-        "\n",
-        "    logger.info(\"Running all AI STEM agents...\")\n",
-        "\n",
-        "    results = {}\n",
-        "\n",
-        "    agents = [\n",
-        "        (\"news\", run_news_agent),\n",
-        "        (\"class\", run_class_agent),\n",
-        "        (\"tip\", run_stem_tip_agent),\n",
-        "        (\"project\", run_project_agent),\n",
-        "        (\"weekly\", run_weekly_report_agent),\n",
-        "        (\"competition\", run_competition_agent),\n",
-        "    ]\n",
-        "\n",
-        "    for name, function in agents:\n",
-        "\n",
-        "        try:\n",
-        "            logger.info(\"Running %s agent...\", name)\n",
-        "\n",
-        "            results[name] = function()\n",
-        "\n",
-        "            logger.info(\"%s agent completed.\", name)\n",
-        "\n",
-        "        except Exception as exc:\n",
-        "\n",
-        "            logger.exception(\n",
-        "                \"%s agent failed: %s\",\n",
-        "                name,\n",
-        "                exc,\n",
-        "            )\n",
-        "\n",
-        "            results[name] = None\n",
-        "\n",
-        "    logger.info(\"All agents finished.\")\n",
-        "\n",
-        "    return results\n",
-        "\n",
-        "\n",
-        "# ---------------------------------------------------------\n",
-        "# Application Information\n",
-        "# ---------------------------------------------------------\n",
-        "\n",
-        "def show_status():\n",
-        "    \"\"\"Display application status.\"\"\"\n",
-        "\n",
-        "    print()\n",
-        "    print(\"=\" * 60)\n",
-        "    print(\"       AI STEM AUTOMATION HUB\")\n",
-        "    print(\"=\" * 60)\n",
-        "    print(f\"Date: {datetime.now().strftime('%d-%m-%Y')}\")\n",
-        "    print(f\"Time: {datetime.now().strftime('%H:%M:%S')}\")\n",
-        "    print()\n",
-        "    print(\"Available Agents:\")\n",
-        "    print()\n",
-        "    print(\"  1. news         - Daily AI/Robotics News\")\n",
-        "    print(\"  2. class        - STEM Class Update\")\n",
-        "    print(\"  3. tip          - Daily STEM Tip\")\n",
-        "    print(\"  4. project      - Project Idea\")\n",
-        "    print(\"  5. weekly       - Weekly Progress Report\")\n",
-        "    print(\"  6. competition  - Competition Update\")\n",
-        "    print(\"  7. all          - Run all agents\")\n",
-        "    print()\n",
-        "    print(\"=\" * 60)\n",
-        "    print()\n",
-        "\n",
-        "\n",
-        "# ---------------------------------------------------------\n",
-        "# Command Line Interface\n",
-        "# ---------------------------------------------------------\n",
-        "\n",
-        "def main():\n",
-        "\n",
-        "    parser = argparse.ArgumentParser(\n",
-        "        description=\"AI STEM Automation Hub\"\n",
-        "    )\n",
-        "\n",
-        "    parser.add_argument(\n",
-        "        \"agent\",\n",
-        "        nargs=\"?\",\n",
-        "        default=\"status\",\n",
-        "        choices=[\n",
-        "            \"news\",\n",
-        "            \"class\",\n",
-        "            \"tip\",\n",
-        "            \"project\",\n",
-        "            \"weekly\",\n",
-        "            \"competition\",\n",
-        "            \"all\",\n",
-        "            \"status\",\n",
-        "        ],\n",
-        "        help=\"Agent to run\",\n",
-        "    )\n",
-        "\n",
-        "    args = parser.parse_args()\n",
-        "\n",
-        "    if args.agent == \"status\":\n",
-        "        show_status()\n",
-        "        return\n",
-        "\n",
-        "    run_agent(args.agent)\n",
-        "\n",
-        "\n",
-        "# ---------------------------------------------------------\n",
-        "# Entry Point\n",
-        "# ---------------------------------------------------------\n",
-        "\n",
-        "if __name__ == \"__main__\":\n",
-        "    main()"
-      ],
-      "metadata": {
-        "id": "NOoJYa-BoLGS"
-      },
-      "execution_count": null,
-      "outputs": []
-    }
-  ]
+import argparse
+import logging
+import os
+import sys
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+)
+
+LOGGER = logging.getLogger("ai-automation")
+
+IST = ZoneInfo("Asia/Kolkata")
+
+
+def now_ist():
+    return datetime.now(IST)
+
+
+def run_news():
+    from news_agent import run
+    return run()
+
+
+def run_class():
+    from class_agent import run
+    return run()
+
+
+def run_stem_tip():
+    from stem_tip_agent import run
+    return run()
+
+
+def run_project():
+    from project_agent import run
+    return run()
+
+
+def run_weekly():
+    from weekly_report_agent import run
+    return run()
+
+
+def run_competition():
+    from competition_agent import run
+    return run()
+
+
+AGENTS = {
+    "news": run_news,
+    "class": run_class,
+    "stem_tip": run_stem_tip,
+    "project": run_project,
+    "weekly": run_weekly,
+    "competition": run_competition,
 }
+
+
+def run_agent(name):
+    if name not in AGENTS:
+        raise ValueError(f"Unknown agent: {name}")
+
+    LOGGER.info("Starting agent: %s", name)
+
+    try:
+        result = AGENTS[name]()
+
+        LOGGER.info("Agent completed: %s", name)
+
+        if result:
+            LOGGER.info("Result: %s", str(result)[:500])
+
+        return result
+
+    except Exception:
+        LOGGER.exception("Agent failed: %s", name)
+        raise
+
+
+def run_all():
+    results = {}
+
+    for name in AGENTS:
+        try:
+            results[name] = run_agent(name)
+        except Exception as exc:
+            results[name] = {
+                "status": "failed",
+                "error": str(exc),
+            }
+
+    return results
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="AI STEM Automation Agent"
+    )
+
+    parser.add_argument(
+        "--agent",
+        default="all",
+        choices=["all"] + list(AGENTS.keys()),
+        help="Agent to execute",
+    )
+
+    args = parser.parse_args()
+
+    LOGGER.info(
+        "AI Automation started | %s",
+        now_ist().strftime("%Y-%m-%d %H:%M:%S IST"),
+    )
+
+    if args.agent == "all":
+        results = run_all()
+        LOGGER.info("All agents completed")
+        return 0 if results else 1
+
+    run_agent(args.agent)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

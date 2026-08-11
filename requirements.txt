@@ -1,0 +1,8 @@
+```text
+streamlit
+google-genai
+python-dotenv
+requests
+beautifulsoup4
+APScheduler
+```

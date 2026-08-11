@@ -1,20 +1,4 @@
 {
-  "nbformat": 4,
-  "nbformat_minor": 0,
-  "metadata": {
-    "colab": {
-      "provenance": [],
-      "authorship_tag": "ABX9TyNeC5zbmkpsz6t4EBk7r5/Y",
-      "include_colab_link": true
-    },
-    "kernelspec": {
-      "name": "python3",
-      "display_name": "Python 3"
-    },
-    "language_info": {
-      "name": "python"
-    }
-  },
   "cells": [
     {
       "cell_type": "markdown",
@@ -30,29 +14,32 @@
       "cell_type": "code",
       "source": [
         "```text\n",
-        "# AI\n",
         "google-genai\n",
-        "\n",
-        "# Environment configuration\n",
         "python-dotenv\n",
-        "\n",
-        "# Web / News\n",
         "requests\n",
         "beautifulsoup4\n",
-        "\n",
-        "# Scheduler\n",
         "APScheduler\n",
-        "\n",
-        "# Database\n",
-        "# SQLite is included with Python,\n",
-        "# so no package is required.\n",
+        "streamlit\n",
         "```\n"
       ],
       "metadata": {
-        "id": "aeZqtrRc0at5"
+        "id": "58L0E8g328h6"
       },
       "execution_count": null,
       "outputs": []
     }
-  ]
+  ],
+  "metadata": {
+    "colab": {
+      "name": "Welcome To Colab",
+      "provenance": [],
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
 }

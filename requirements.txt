@@ -1,6 +1,7 @@
-streamlit
-google-genai
-python-dotenv
-requests
-beautifulsoup4
-APScheduler
+streamlit>=1.40
+google-genai>=1.0
+python-dotenv>=1.0
+requests>=2.31
+beautifulsoup4>=4.12
+lxml>=5.0
+APScheduler>=3.10
